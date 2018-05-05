@@ -15,8 +15,10 @@
     #include "smpeg.h"
 #endif
 
-
+#ifdef _3DS
 #include <3ds.h>
+#endif
+
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
