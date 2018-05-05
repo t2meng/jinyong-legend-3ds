@@ -119,6 +119,7 @@ int InitSDL(void)
 	SDL_N3DSKeyBind(KEY_CPAD_LEFT, SDLK_LEFT);
     SDL_N3DSKeyBind(KEY_CPAD_RIGHT, SDLK_RIGHT);
 	#endif
+
     //atexit(SDL_Quit);    可能有问题，屏蔽掉
  
     SDL_VideoDriverName(tmpstr, 255);
