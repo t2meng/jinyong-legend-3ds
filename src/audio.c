@@ -7,6 +7,7 @@ PHL_Sound loadWav(char* fname, int loop);
 
 void PHL_AudioInit()
 {
+	ndspInit();
 	ndspSetOutputMode(NDSP_OUTPUT_STEREO);
 	ndspSetOutputCount(1);
 }
@@ -86,6 +87,7 @@ PHL_Sound loadWav(char* fname, int loop)
 					fread(&subchunk2Size, 4, 1, f);
 					
 					snd.numChannels = numChannels;
+					snd.loop = loop;
 					
 					if(bitsPerSample == 8)
 					{

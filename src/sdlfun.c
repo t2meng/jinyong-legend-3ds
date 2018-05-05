@@ -467,7 +467,7 @@ int JY_PlayMIDI(const char *filename)
 		return 1;
 	}
 	
-	PHL_PlaySound(*currentMusic, true);
+	PHL_PlaySound(*currentMusic, 0);
 	
     strcpy(currentfile,filename);
 
@@ -511,7 +511,7 @@ int JY_PlayWAV(const char *filename)
 	if(WavChunk[currentWav]){
         //Mix_VolumeChunk(WavChunk[currentWav],g_SoundVolume);
         //Mix_PlayChannel(-1, WavChunk[currentWav], 0);  //播放音效
-		PHL_PlaySound(*(WavChunk[currentWav]), false);
+		PHL_PlaySound(*(WavChunk[currentWav]), 1);
 		currentWav++;
 		if(currentWav>=WAVNUM)
 			currentWav=0;
