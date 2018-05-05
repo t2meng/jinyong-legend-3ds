@@ -3,52 +3,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-const int MODE_NDSP = 1,
-		  MODE_CSND = 2;
-
-int audioMode = 0;
-
 PHL_Sound loadWav(char* fname, int loop);
 
 void PHL_AudioInit()
 {
-	int loadMode = 0;
-	
-	Result rdsp = ndspInit();
-	if (rdsp) {
-		//printf("\nNDSP Failed: %08lX\n", rdsp);
-		//loadMode = MODE_CSND;
-		loadMode = 0; //DSP or no sound for you! CSND a shit.
-	}else{
-		loadMode = MODE_NDSP;
-	}
-	
-	if (loadMode == MODE_NDSP) {
-		//printf("\nNDSP Audio Mode");
-		
-		ndspSetOutputMode(NDSP_OUTPUT_STEREO);
-		ndspSetOutputCount(1);
-		
-		audioMode = MODE_NDSP;
-	}
-	
-	else if (loadMode == MODE_CSND) {
-		//printf("\nCSND Audio Mode");
-		
-		csndInit();
-		audioMode = MODE_CSND;
-	}
+	ndspSetOutputMode(NDSP_OUTPUT_STEREO);
+	ndspSetOutputCount(1);
 }
 
 void PHL_AudioClose()
 {
-	if (audioMode == MODE_NDSP) {
-		ndspExit();
-	}
-	
-	else if (audioMode == MODE_CSND) {
-		csndExit();
-	}
+	ndspExit();
 }
 
 PHL_Sound PHL_LoadSound(char* fname, int loop)
@@ -155,45 +120,27 @@ PHL_Sound loadWav(char* fname, int loop)
 void PHL_PlaySound(PHL_Sound snd, int channel)
 {
 	if (snd.data != NULL) {
-		if (audioMode == MODE_NDSP)
-		{
-			ndspChnReset(channel);
-			ndspChnSetInterp(channel, NDSP_INTERP_NONE);
-			ndspChnSetRate(channel, (float)snd.sampleRate);
-			ndspChnSetFormat(channel, snd.ndspFormat);
-			
-			
-			memset(&waveBuf[channel], 0, sizeof(ndspWaveBuf));
-			waveBuf[channel].data_vaddr = (u32)(snd.data);
-			waveBuf[channel].nsamples = snd.dataSize / (snd.bitsPerSample >> 3) / snd.numChannels;
-			waveBuf[channel].looping = snd.loop;
-			waveBuf[channel].status = NDSP_WBUF_FREE;
-			
-			DSP_FlushDataCache(snd.data, snd.dataSize);
-			ndspChnWaveBufAdd(channel, &waveBuf[channel]);
-		}
+		ndspChnReset(channel);
+		ndspChnSetInterp(channel, NDSP_INTERP_NONE);
+		ndspChnSetRate(channel, (float)snd.sampleRate);
+		ndspChnSetFormat(channel, snd.ndspFormat);
 		
-		else if (audioMode == MODE_CSND)
-		{
-			channel = (channel + 1) * 8;
-			csndPlaySound(channel, SOUND_FORMAT_16BIT, snd.sampleRate, 1, 0, snd.data, snd.data, snd.dataSize);
-		}
+		
+		memset(&waveBuf[channel], 0, sizeof(ndspWaveBuf));
+		waveBuf[channel].data_vaddr = (u32)(snd.data);
+		waveBuf[channel].nsamples = snd.dataSize / (snd.bitsPerSample >> 3) / snd.numChannels;
+		waveBuf[channel].looping = snd.loop;
+		waveBuf[channel].status = NDSP_WBUF_FREE;
+		
+		DSP_FlushDataCache(snd.data, snd.dataSize);
+		ndspChnWaveBufAdd(channel, &waveBuf[channel]);
 	}
 }
 
 
 void PHL_StopSound(PHL_Sound snd, int channel)
 {
-	if (audioMode == MODE_NDSP)
-	{
-		ndspChnWaveBufClear(channel);
-	}
-	
-	else if (audioMode == MODE_CSND)
-	{
-		channel = (channel + 1) * 8;
-		CSND_SetPlayState(channel, 0);
-	}
+	ndspChnWaveBufClear(channel);
 }
 
 void PHL_FreeSound(PHL_Sound snd)

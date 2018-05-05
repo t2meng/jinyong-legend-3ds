@@ -66,7 +66,8 @@ local LargeMemory=1;             --设置内存使用方式 1 多使用内存，0 少使用内存
 
 if LargeMemory==1 then
      --贴图缓存数量，一般500-1000。如果在debug.txt中经常出现"pic cache is full"，可以适当增加
-    CONFIG.MAXCacheNum=1000;
+    --CONFIG.MAXCacheNum=1000;
+	ONFIG.MAXCacheNum=20;
 	CONFIG.CleanMemory=0;         --场景切换时是否清理lua内存。0 不清理 1 清理
 	CONFIG.LoadFullS=1;           --1 整个S*文件载入内存 0 只载入当前场景，由于S*有4M多，这样可以节约很多内存
 	CONFIG.LoadMMapType=0;        --加载主地图文件(5个002文件)的类型  0 全部载入 1 载入主角附近的行 2 载入主角附近的行和列

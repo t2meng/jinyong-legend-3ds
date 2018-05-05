@@ -460,7 +460,7 @@ int JY_PlayMIDI(const char *filename)
 
 	Mix_PlayMusic(currentMusic, -1);
 	*/
-	PHL_Sound tmp = PHL_LoadSound(filename, 1);
+	PHL_Sound tmp = PHL_LoadSound(filename, true);
 	currentMusic = &tmp;
 	if(currentMusic==NULL){
 		JY_Error("Open music file %s failed!",filename);
