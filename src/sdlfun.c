@@ -4,11 +4,11 @@
 
 #include "jymain.h"
  
-static Mix_Music *currentMusic=NULL;         //播放音乐数据，由于同时只播放一个，用一个变量
+static PHL_Sound *currentMusic;         //播放音乐数据，由于同时只播放一个，用一个变量
 
 #define WAVNUM 5
 
-static Mix_Chunk *WavChunk[WAVNUM];        //播放音效数据，可以同时播放几个，因此用数组
+static PHL_Sound *WavChunk[WAVNUM];        //播放音效数据，可以同时播放几个，因此用数组
 
 static int currentWav=0;                  //当前播放的音效
 
@@ -104,7 +104,7 @@ int InitSDL(void)
 	int i;
 	char tmpstr[255];
    
-	r=SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+	r=SDL_Init(SDL_INIT_VIDEO);
     if( r < 0 ) {
         JY_Error(
                 "Couldn't initialize SDL: %s\n", SDL_GetError());
@@ -127,18 +127,29 @@ int InitSDL(void)
 
     InitFont();  //初始化
     
+	/*
 	r=SDL_InitSubSystem(SDL_INIT_AUDIO);
     if(r<0)
         g_EnableSound=0;
 
-    r=Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096);
+	if(Mix_Init(0) < 0){
+		JY_Error(
+                "Mix_Init: %s\n", SDL_GetError());
+		g_EnableSound=0;
+	}
+    r=Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 2048);
+	
+	*/
+	
+    PHL_AudioInit();// init audio
 
-   if( r < 0 ) {
+	/*
+    if( r < 0 ) {
         JY_Error(
                 "Couldn't initialize SDL_Mixer: %s\n", SDL_GetError());
         g_EnableSound=0;
     }
-
+    */
 	currentWav=0;
 
     for(i=0;i<WAVNUM;i++)
@@ -160,12 +171,14 @@ int ExitSDL(void)
 
     for(i=0;i<WAVNUM;i++){
 		if(WavChunk[i]){
-             Mix_FreeChunk(WavChunk[i]);
+             //Mix_FreeChunk(WavChunk[i]);
+			 PHL_FreeSound(*(WavChunk[i]));
 		     WavChunk[i]=NULL;
 		}
 	}
 
-	Mix_CloseAudio();
+	//Mix_CloseAudio();
+	PHL_AudioClose();
 
     JY_LoadPicture("",0,0);    // 释放可能加载的图片表面
     SDL_Quit();
@@ -435,6 +448,7 @@ int JY_PlayMIDI(const char *filename)
 
     StopMIDI();
 	
+	/*
 	currentMusic=Mix_LoadMUS(filename);
 
 	if(currentMusic==NULL){
@@ -445,7 +459,16 @@ int JY_PlayMIDI(const char *filename)
 	Mix_VolumeMusic(g_MusicVolume);
 
 	Mix_PlayMusic(currentMusic, -1);
-
+	*/
+	PHL_Sound tmp = PHL_LoadSound(filename, 1);
+	currentMusic = &tmp;
+	if(currentMusic==NULL){
+		JY_Error("Open music file %s failed!",filename);
+		return 1;
+	}
+	
+	PHL_PlaySound(*currentMusic, true);
+	
     strcpy(currentfile,filename);
 
 	return 0;
@@ -455,8 +478,12 @@ int JY_PlayMIDI(const char *filename)
 int StopMIDI()
 {
     if(currentMusic!=NULL){
-		Mix_HaltMusic();
-		Mix_FreeMusic(currentMusic);
+		//Mix_HaltMusic();
+		//Mix_FreeMusic(currentMusic);
+		//PHL_StopMusic();
+		//PHL_FreeMusic(*currentMusic);
+		PHL_StopSound(*currentMusic, 0);
+		PHL_FreeSound(*currentMusic);
 		currentMusic=NULL;
 	}
     return 0;
@@ -471,15 +498,20 @@ int JY_PlayWAV(const char *filename)
 		return 1;    
 
 	if(WavChunk[currentWav]){          //释放当前音效
-        Mix_FreeChunk(WavChunk[currentWav]);
+        //Mix_FreeChunk(WavChunk[currentWav]);
+		PHL_FreeSound(*(WavChunk[currentWav]));
         WavChunk[currentWav]=NULL;
 	}
 
-	WavChunk[currentWav]= Mix_LoadWAV(filename);  //加载到当前音效
+	//WavChunk[currentWav]= Mix_LoadWAV(filename);  //加载到当前音效
+	PHL_Sound tmp = PHL_LoadSound(filename,false);
+	WavChunk[currentWav]= &tmp;
+	
 
 	if(WavChunk[currentWav]){
-        Mix_VolumeChunk(WavChunk[currentWav],g_SoundVolume);
-        Mix_PlayChannel(-1, WavChunk[currentWav], 0);  //播放音效
+        //Mix_VolumeChunk(WavChunk[currentWav],g_SoundVolume);
+        //Mix_PlayChannel(-1, WavChunk[currentWav], 0);  //播放音效
+		PHL_PlaySound(*(WavChunk[currentWav]), false);
 		currentWav++;
 		if(currentWav>=WAVNUM)
 			currentWav=0;

@@ -100,7 +100,7 @@ function SetGlobalConst()
 
 
    --CC.MIDIFile=CONFIG.SoundPath .. "game%02d.mid";
-   CC.MIDIFile=CONFIG.SoundPath .. "game%02d.wav"; --¸ü¸ÄÒôÀÖÎªmp3
+   CC.MIDIFile=CONFIG.SoundPath .. "game%02d.wav"; 
    CC.ATKFile=CONFIG.SoundPath .. "atk%02d.wav";
    CC.EFile=CONFIG.SoundPath .. "e%02d.wav";
 

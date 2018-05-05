@@ -10,7 +10,8 @@
 #include "SDL.h"
 #include "SDL_ttf.h"
 #include "SDL_image.h"
-#include "SDL_mixer.h"
+
+
 #ifdef HAS_SDL_MPEG
     #include "smpeg.h"
 #endif
@@ -22,6 +23,8 @@
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
+
+#include "audio.h" 
  
 #include "luafun.h"
 

@@ -50,7 +50,7 @@ CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lcitro3d -lctru -lm -lbz2 -lSDL -lSDL_ttf -lSDL_mixer -lSDL_image -lfreetype -lctru -lSDL -lmikmod -lvorbisidec -lpng -lz -lbz2 -logg -lcitro3d -lmad -ljpeg -lctru -llua -lm
+LIBS	:= -lcitro3d -lctru -lm -lbz2 -lSDL -lSDL_ttf -lSDL_image -lfreetype -lctru -lSDL -lpng -lz -lbz2 -lcitro3d -ljpeg -lctru -llua -lm
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
@@ -141,7 +141,7 @@ $(BUILD):
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf
+	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf $(TARGET).cia $(TARGET)-strip.elf
 
 
 #---------------------------------------------------------------------------------
