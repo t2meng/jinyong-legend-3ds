@@ -66,8 +66,7 @@ local LargeMemory=1;             --设置内存使用方式 1 多使用内存，0 少使用内存
 
 if LargeMemory==1 then
      --贴图缓存数量，一般500-1000。如果在debug.txt中经常出现"pic cache is full"，可以适当增加
-    --CONFIG.MAXCacheNum=1000;
-	CONFIG.MAXCacheNum=20;
+    CONFIG.MAXCacheNum=1000;
 	CONFIG.CleanMemory=0;         --场景切换时是否清理lua内存。0 不清理 1 清理
 	CONFIG.LoadFullS=1;           --1 整个S*文件载入内存 0 只载入当前场景，由于S*有4M多，这样可以节约很多内存
 	CONFIG.LoadMMapType=0;        --加载主地图文件(5个002文件)的类型  0 全部载入 1 载入主角附近的行 2 载入主角附近的行和列
@@ -77,10 +76,10 @@ if LargeMemory==1 then
 	CONFIG.PreLoadPicGrp=1;       --1 预加载贴图文件*.grp, 0 不预加载。预加载可以避免走路偶尔停顿和战斗出招停顿。但占用内存
 else
     CONFIG.MAXCacheNum=500;
-	CONFIG.CleanMemory=1;
+	CONFIG.CleanMemory=0;
 	CONFIG.LoadFullS=0;
-	CONFIG.LoadMMapType=1;
-	CONFIG.PreLoadPicGrp=0;
+	CONFIG.LoadMMapType=0;
+	CONFIG.PreLoadPicGrp=1;
 end
 
 CONFIG.LoadMMapScope=0;          --部分加载主地图文件时的加载范围。坐标变化超过此值时就重新加载。此值*4即为实际加载的数据大小。

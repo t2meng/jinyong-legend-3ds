@@ -10,21 +10,18 @@
 #include "SDL.h"
 #include "SDL_ttf.h"
 #include "SDL_image.h"
+#include "sound.h"
 
 
 #ifdef HAS_SDL_MPEG
     #include "smpeg.h"
 #endif
 
-#ifdef _3DS
-#include <3ds.h>
-#endif
 
+#include <3ds.h>
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
-
-#include "audio.h" 
  
 #include "luafun.h"
 
