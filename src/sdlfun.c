@@ -480,7 +480,7 @@ int JY_PlayWAV(const char *filename)
 	WavChunk[currentWav]= Mix_LoadWAV(filename);  //加载到当前音效
 
 	if(WavChunk[currentWav]){
-        //Mix_VolumeChunk(WavChunk[currentWav],g_SoundVolume);
+        Mix_VolumeChunk(WavChunk[currentWav],g_SoundVolume);
         Mix_PlayChannel(-1, WavChunk[currentWav], 0);  //播放音效
 		currentWav++;
 		if(currentWav>=WAVNUM)

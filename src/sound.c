@@ -11,8 +11,10 @@ bool soundEnabled;
 
 FSOUND_SAMPLE SFX[NUMSFX];
 
-int SFXMasterVolume = 64;
-int MasterVolume = 64;
+#define MIX_MAX_VOLUME 128
+
+int SFXMasterVolume = 128;
+int MasterVolume = 128;
 int frequency=11025; //default
 int channel;
 
@@ -178,7 +180,7 @@ void FSOUND_PlaySound(int chl,FSOUND_SAMPLE* s)
 	channel++;
 	channel%=7;
 
-	csndPlaySound(channel+8, s->format, frequency, 1.0, 0.0, (u32*)s->data, (u32*)s->data, s->size);
+	csndPlaySound(channel+8, s->format, frequency, (float)SFXMasterVolume/MIX_MAX_VOLUME, 0.0, (u32*)s->data, (u32*)s->data, s->size);
 }
 
 void FMUSIC_StopSong(FMUSIC_MODULE* s)
@@ -193,7 +195,7 @@ void FMUSIC_PlaySong(FMUSIC_MODULE* s)
 	if(!s || !s->used || !s->data || !soundEnabled || MasterVolume == 0)return;
 	flag = s->format;
 	if(s->loop) flag |= SOUND_REPEAT;
-	csndPlaySound(15, flag, 11025, 1.0, 0.0, (u32*)s->data, (u32*)s->data, s->size);
+	csndPlaySound(15, flag, 11025, (float)MasterVolume/MIX_MAX_VOLUME, 0.0, (u32*)s->data, (u32*)s->data, s->size);
 }
 
 
@@ -305,7 +307,7 @@ int Mix_PlayChannel(int channel, Mix_Chunk *s, int loops)
 	if(loops) s->format |= SOUND_REPEAT;
 	else s->format &= ~SOUND_REPEAT;
 
-	csndPlaySound(channel+8, s->format, frequency, 1.0, 0.0, (u32*)s->data, (u32*)s->data, s->size);
+	csndPlaySound(channel+8, s->format, frequency, (float)SFXMasterVolume/MIX_MAX_VOLUME, 0.0, (u32*)s->data, (u32*)s->data, s->size);
 	
 	return 0;
 }
@@ -317,7 +319,7 @@ int Mix_PlayMusic(Mix_Music * s , int loops )
 	lastPlayed = s;
 	flag = s->format;
 	if (loops) flag |= SOUND_REPEAT;
-	csndPlaySound(15, flag, 11025, 1.0, 0.0, (u32*)s->data, (u32*)s->data, s->size);
+	csndPlaySound(15, flag, 11025, (float)MasterVolume/MIX_MAX_VOLUME, 0.0, (u32*)s->data, (u32*)s->data, s->size);
 	isMusicPlaying = 1;
 	return 0;
 }
@@ -331,7 +333,13 @@ int Mix_OpenAudio( int audio_rate, u16 audio_format, int audio_channels, int buf
 	return FSOUND_Init(audio_rate, 0, 0);
 }
 
-void Mix_VolumeMusic( int vol ){}
+void Mix_VolumeMusic( int volume ){
+	MasterVolume = volume;
+}
+
+void Mix_VolumeChunk(Mix_Chunk *chunk, int volume){
+	SFXMasterVolume = volume;
+}
 
 Mix_Chunk * Mix_LoadWAV(const char * f) {
 	return FSOUND_Sample_Load(0, f,0, 0, 0);

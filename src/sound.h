@@ -76,7 +76,9 @@ void Mix_CloseAudio();
 
 int Mix_OpenAudio( int audio_rate, u16 audio_format, int audio_channels, int bufsize );
 
-void Mix_VolumeMusic( int vol );
+void Mix_VolumeMusic( int volume );
+
+void Mix_VolumeChunk(Mix_Chunk *chunk, int volume);
 
 const char * Mix_GetError();
 
