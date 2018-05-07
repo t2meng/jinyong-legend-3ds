@@ -37,7 +37,7 @@ void soundClose()
 	int i;
 
 	CSND_SetPlayState(15, 0);//Stop music audio playback.
-	csndExecCmds(0);
+	CSND_UpdateInfo(0);
 
 	for(i=0;i<NUMSFX;i++)
 	{
@@ -317,7 +317,7 @@ int Mix_PlayMusic(Mix_Music * s , int loops )
 	lastPlayed = s;
 	flag = s->format;
 	if (loops) flag |= SOUND_REPEAT;
-	csndPlaySound(15, flag, 44100, 1.0, 0.0, (u32*)s->data, (u32*)s->data, s->size);
+	csndPlaySound(15, flag, 11025, 1.0, 0.0, (u32*)s->data, (u32*)s->data, s->size);
 	isMusicPlaying = 1;
 	return 0;
 }
@@ -343,14 +343,16 @@ Mix_Music * Mix_LoadMUS(const char *f){
 
 void Mix_HaltMusic()
 {
+	
 	CSND_SetPlayState(15, 0);//Stop music audio playback.
-	csndExecCmds(0);
+	CSND_UpdateInfo(0);
 }
 
 void Mix_PauseMusic()
 {
+	
 	CSND_SetPlayState(15, 0);//Stop music audio playback.
-	csndExecCmds(0);
+	CSND_UpdateInfo(0);
 	musicPaused = 1;
 }
 
