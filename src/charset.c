@@ -187,10 +187,12 @@ int JY_DrawStr(int x, int y, const char *str,int color,int size,const char *font
 	if(g_Rotate==0){
 	    rect2=rect1;
 
+		#ifndef _3DS
 		rect_dest.x=rect2.x+1;
 		rect_dest.y=rect2.y+1;
 		SDL_SetColors(fontSurface,&c2,1,1);
 		SDL_BlitSurface(fontSurface, NULL, g_Surface, &rect_dest);    //表面写到游戏表面--阴影色
+		#endif
 
 		rect_dest.x=rect2.x;
 		rect_dest.y=rect2.y;
@@ -204,11 +206,13 @@ int JY_DrawStr(int x, int y, const char *str,int color,int size,const char *font
 		fontSurface=tempSurface;
 		rect2=RotateRect(&rect1);
 
+		#ifndef _3DS
 		rect_dest.x=rect2.x-1;
 		rect_dest.y=rect2.y+1;
 		SDL_SetColors(fontSurface,&c2,1,1);
 		SDL_BlitSurface(fontSurface, NULL, g_Surface, &rect_dest);    //表面写到游戏表面 --阴影色
-
+        #endif
+		
 		rect_dest.x=rect2.x;
 		rect_dest.y=rect2.y; 
 		SDL_SetColors(fontSurface,&c,1,1);
