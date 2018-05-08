@@ -117,18 +117,13 @@ int InitSDL(void)
 	SDL_N3DSKeyBind(KEY_CPAD_DOWN, SDLK_DOWN);
 	SDL_N3DSKeyBind(KEY_CPAD_LEFT, SDLK_LEFT);
     SDL_N3DSKeyBind(KEY_CPAD_RIGHT, SDLK_RIGHT);
-    //atexit(SDL_Quit);    可能有问题，屏蔽掉
+    
  
     SDL_VideoDriverName(tmpstr, 255);
 	JY_Debug("Video Driver: %s\n",tmpstr);
 
     InitFont();  //初始化
     
-	/*
-	r=SDL_InitSubSystem(SDL_INIT_AUDIO);
-    if(r<0)
-        g_EnableSound=0;
-	*/
 
 	soundInit();
 	
@@ -205,7 +200,7 @@ int InitGame(void)
 
 	*/
 	
-	g_Surface=SDL_SetVideoMode(w,h, g_ScreenBpp, SDL_SWSURFACE | SDL_TOPSCR | SDL_CONSOLEBOTTOM | SDL_FULLSCREEN);
+	g_Surface=SDL_SetVideoMode(w,h, g_ScreenBpp, SDL_SWSURFACE | SDL_TOPSCR | SDL_FULLSCREEN);
 	
 	if(g_Surface==NULL)
 		JY_Error("Cannot set video mode");
