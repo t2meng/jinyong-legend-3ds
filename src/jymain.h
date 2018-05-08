@@ -88,7 +88,7 @@ int ExitFont();
 
 // 根据字体文件名和字号打开字体
 // size 为按像素大小的字号
-static TTF_Font *GetFont(const char *filename,int size);
+//static TTF_Font *GetFont(const char *filename,int size);
 
 // 写字符串
 // x,y 坐标
@@ -149,13 +149,13 @@ int JY_PicLoadFile(const char*idxfilename, const char* grpfilename, int id);
 
 int JY_LoadPic(int fileid, int picid, int x,int y,int flag,int value);
 
-static int LoadPic(int fileid,int picid, struct CacheNode *cache);
+//static int LoadPic(int fileid,int picid, struct CacheNode *cache);
 
 int JY_GetPicXY(int fileid, int picid, int *w,int *h,int *xoff,int *yoff);
  
-static SDL_Surface* CreatePicSurface32(unsigned char *data, int w,int h,int datalong);
+//static SDL_Surface* CreatePicSurface32(unsigned char *data, int w,int h,int datalong);
 
-static int LoadPallette(char *filename); 
+//static int LoadPallette(char *filename); 
  
 
 //mainmap.c
@@ -231,7 +231,7 @@ int JY_DrawWarMap(int flag, int x, int y, int v1,int v2,int v3);
 
 //sdlfun.c
 
-static int KeyFilter(const SDL_Event *event);
+//static int KeyFilter(const SDL_Event *event);
 
 int InitSDL(void);
 

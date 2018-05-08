@@ -549,8 +549,9 @@ int JY_LoadSMap(const char *Sfilename,const char*tmpfilename, int num,int x_max,
 	//读取S文件
     if(g_LoadFullS==0){     //读取s到临时文件
         strcpy(TempS_filename,tmpfilename);  
-        if(pS==NULL)
+        if(pS==NULL){
             pS=(Sint16*) malloc(S_XMax*S_YMax*6*2);
+		}
 
 	    if(pS==NULL){
 		    JY_Error("JY_LoadSMap error: can not malloc memory\n");
@@ -574,8 +575,9 @@ int JY_LoadSMap(const char *Sfilename,const char*tmpfilename, int num,int x_max,
         currentS=-1;
     }
     else{      //全部读入内存
-        if(pS==NULL)
+        if(pS==NULL){
             pS=(Sint16*) malloc(S_XMax*S_YMax*6*2*S_Num);
+		}
 
 	    if(pS==NULL){
 		    JY_Error("JY_LoadSMap error: can not malloc memory\n");
@@ -677,8 +679,9 @@ int JY_UnloadSMap()
 int ReadS(int id)
 {
     FILE *fp;
-    if(id<0 || id>=S_Num)
+    if(id<0 || id>=S_Num){
         return 1;
+	}
 
 	if((fp=fopen(TempS_filename,"rb"))==NULL){
         JY_Error("JY_LoadSMap error:file not open ---%s",TempS_filename);
@@ -695,8 +698,9 @@ int ReadS(int id)
 int WriteS(int id)
 {
     FILE *fp;
-    if(id<0 || id>=S_Num)
+    if(id<0 || id>=S_Num){
         return 1;
+	}
 
 	if((fp=fopen(TempS_filename,"r+b"))==NULL){
         JY_Error("JY_LoadSMap error:file not open ---%s",TempS_filename);

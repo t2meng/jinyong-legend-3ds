@@ -11,8 +11,6 @@ bool soundEnabled;
 
 FSOUND_SAMPLE SFX[NUMSFX];
 
-#define MIX_MAX_VOLUME 128
-
 int SFXMasterVolume = 128;
 int MasterVolume = 128;
 int frequency=11025; //default
@@ -219,7 +217,6 @@ FSOUND_SAMPLE* FSOUND_Sample_Load(int flag, const char * f,int a, int b, int c)
 
 FMUSIC_MODULE* FMUSIC_LoadSong(const char * f)
 {
-	int size;
 	int i;
 	for(i=0;i<NUMSFX;i++)
 	{
@@ -377,5 +374,5 @@ void Mix_ResumeMusic()
 
 
 const char * Mix_GetError(){
-	return SDL_GetError();;
+	return SDL_GetError();
 }

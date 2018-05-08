@@ -260,11 +260,13 @@ int HAPI_LoadPic(lua_State *pL)
 	int nooffset=0;
 	int bright=0;
 
-    if(lua_isnoneornil(pL,5)==0 )
+    if(lua_isnoneornil(pL,5)==0 ){
         nooffset=(int)lua_tonumber(pL,5);
+	}
 
-    if(lua_isnoneornil(pL,6)==0 )
+    if(lua_isnoneornil(pL,6)==0 ){
         bright=(int)lua_tonumber(pL,6);
+	}
     
 	JY_LoadPic(fileid,picid,x,y,nooffset,bright);
 

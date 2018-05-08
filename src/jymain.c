@@ -285,8 +285,9 @@ int JY_Debug(const char * fmt,...)
 	va_start(argptr, fmt);
 	vsnprintf(string, sizeof(string), fmt, argptr);
 	va_end(argptr);
-    if(IsDebug==0)
+    if(IsDebug==0){
         return 0;
+	}
 
 	fp=fopen(DEBUG_FILE,"a+t");
 	time(&t);

@@ -4,16 +4,14 @@
 
 #include <stdlib.h>
 #include <3ds.h>
+#include <SDL.h>
 
 //******************** Audio
 
 #define FSOUND_FREE 1
 #define NUMSFX (45)
 
-#define AUDIO_S16 SOUND_FORMAT_16BIT
-#define MIX_MAX_VOLUME 1
-#define MIX_DEFAULT_FORMAT SOUND_FORMAT_16BIT
-
+#define MIX_MAX_VOLUME 128
 
 
 typedef struct FSOUND_SAMPLE

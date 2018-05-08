@@ -6,6 +6,11 @@
 #include <stdlib.h>
 #include "jymain.h"
 
+
+static int LoadPic(int fileid,int picid, struct CacheNode *cache);
+static SDL_Surface* CreatePicSurface32(unsigned char *data, int w,int h,int datalong);
+static int LoadPallette(char *filename);
+
 static struct PicFileCache pic_file[PIC_FILE_NUM];     
 
 LIST_HEAD(cache_head);             //定义cache链表头

@@ -233,7 +233,7 @@ int  JY_CharSet(const char *src, char *dest, int flag)
  
     Uint8 *psrc,*pdest;
     Uint8 b0,b1;
-	int d0;
+	
 	Uint16 tmpchar;
 
 	psrc=(Uint8*)src;
@@ -274,7 +274,7 @@ int  JY_CharSet(const char *src, char *dest, int flag)
 				break;
 			}
 			else{
-				d0=b0+b1*256;
+				
 				switch(flag){
 				case 0:   //Big5 --> GBK    
              	    tmpchar=big5_gbk[b0-128][b1];
