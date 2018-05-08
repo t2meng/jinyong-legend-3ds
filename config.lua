@@ -49,7 +49,7 @@ CONFIG.JYMain_Lua=CONFIG.ScriptPath .. "jymain.lua";   --lua主程序名
 --其他系统可以找个合适的truetype字体复制到游戏data或其他目录下，在这里给出路径和文件名
 CONFIG.FontName=CONFIG.CurrentPath .."font/simsun.ttf";
 
-CONFIG.OSCharSet=0      -- 显示字符集 0 简体 1 繁体
+CONFIG.OSCharSet=1      -- 显示字符集 0 简体 1 繁体
 
 --显示主地图x和y方向增加的贴图数，以保证所有贴图能全部显示
 CONFIG.MMapAddX=2;
