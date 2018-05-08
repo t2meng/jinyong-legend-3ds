@@ -174,7 +174,7 @@ int JY_DrawStr(int x, int y, const char *str,int color,int size,const char *font
         return 1;
 	}
 
-    fontSurface=TTF_RenderUNICODE_Solid(myfont, (Uint16*)tmp2, c);  //生成表面
+    fontSurface=TTF_RenderUNICODE_Blended(myfont, (Uint16*)tmp2, c);  //生成表面
     
     if(fontSurface==NULL)
 		return 1;
