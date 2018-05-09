@@ -4,17 +4,17 @@
 
 #include "jymain.h"
  
-static Mix_Music *currentMusic=NULL;         //播放音乐数据，由于同时只播放一个，用一个变量
+Mix_Music *currentMusic=NULL;         //播放音乐数据，由于同时只播放一个，用一个变量
 
 #define WAVNUM 5
 
-static Mix_Chunk *WavChunk[WAVNUM];        //播放音效数据，可以同时播放几个，因此用数组
+Mix_Chunk *WavChunk[WAVNUM];        //播放音效数据，可以同时播放几个，因此用数组
 
-static int currentWav=0;                  //当前播放的音效
+int currentWav=0;                  //当前播放的音效
 
 #define RECTNUM  20
-static SDL_Rect ClipRect[RECTNUM];        // 当前设置的剪裁矩形
-static int currentRect=0;
+SDL_Rect ClipRect[RECTNUM];        // 当前设置的剪裁矩形
+int currentRect=0;
 
 extern SDL_Surface* g_Surface;        // 游戏使用的视频表面
 extern Uint32 g_MaskColor32;      // 透明色

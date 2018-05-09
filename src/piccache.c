@@ -7,17 +7,13 @@
 #include "jymain.h"
 
 
-static int LoadPic(int fileid,int picid, struct CacheNode *cache);
-static SDL_Surface* CreatePicSurface32(unsigned char *data, int w,int h,int datalong);
-static int LoadPallette(char *filename);
-
-static struct PicFileCache pic_file[PIC_FILE_NUM];     
+struct PicFileCache pic_file[PIC_FILE_NUM];     
 
 LIST_HEAD(cache_head);             //定义cache链表头
 
-static int currentCacheNum=0;             // 当前使用的cache数
+int currentCacheNum=0;             // 当前使用的cache数
 
-static Uint32 m_color32[256];    // 256调色板
+Uint32 m_color32[256];    // 256调色板
 
 extern int g_MAXCacheNum;                   // 最大Cache个数
 extern Uint32 g_MaskColor32;      // 透明色
@@ -257,7 +253,7 @@ int JY_LoadPic(int fileid, int picid, int x,int y,int flag,int value)
 }
 
 // 加载贴图到表面
-static int LoadPic(int fileid,int picid, struct CacheNode *cache)
+int LoadPic(int fileid,int picid, struct CacheNode *cache)
 {
 
 	SDL_RWops *fp_SDL;
@@ -374,7 +370,7 @@ int JY_GetPicXY(int fileid, int picid, int *w,int *h,int *xoff,int *yoff)
 
 
 //按照原来游戏的RLE格式创建表面
-static SDL_Surface* CreatePicSurface32(unsigned char *data, int w,int h,int datalong)
+SDL_Surface* CreatePicSurface32(unsigned char *data, int w,int h,int datalong)
 {    
 	int p=0;    
 	int i,j;
@@ -457,7 +453,7 @@ static SDL_Surface* CreatePicSurface32(unsigned char *data, int w,int h,int data
 
 // 读取调色板
 // 文件名为空则直接返回
-static int LoadPallette(char *filename)
+int LoadPallette(char *filename)
 {
     FILE *fp;
 	char color[3];

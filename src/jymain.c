@@ -47,7 +47,7 @@ static int IsDebug=0;         //是否打开跟踪文件
 static char JYMain_Lua[255];  //lua主函数
 
 //定义的lua接口函数名
-static const struct luaL_reg jylib [] = {
+const struct luaL_reg jylib [] = {
       {"Debug", HAPI_Debug},
 
       {"GetKey", HAPI_GetKey},
@@ -106,7 +106,7 @@ static const struct luaL_reg jylib [] = {
  
  
 
-static const struct luaL_reg bytelib [] = {
+const struct luaL_reg bytelib [] = {
       {"create", Byte_create},
       {"loadfile", Byte_loadfile},
       {"savefile", Byte_savefile},
