@@ -113,7 +113,10 @@ TTF_Font *GetFont(const char *filename,int size)
 int JY_DrawStr(int x, int y, const char *str,int color,int size,const char *fontname, 
 			   int charset, int OScharset)
 {
-    SDL_Color c,c2;   
+    SDL_Color c;
+	#ifndef _3DS
+    SDL_Color c2;
+    #endif	
 	SDL_Surface *fontSurface=NULL;
 	int w,h;
 	SDL_Rect rect1,rect2,rect_dest;
@@ -136,9 +139,11 @@ int JY_DrawStr(int x, int y, const char *str,int color,int size,const char *font
 	c.g=(Uint8) ((color & 0xff00)>>8);
 	c.b=(Uint8) ((color & 0xff));
 
+	#ifndef _3DS
 	c2.r=c.r>>1;   //阴影色
 	c2.b=c.b>>1;
 	c2.g=c.g>>1;
+	#endif
 
 
     if(charset==0 &&  OScharset==0){//GBK -->unicode简体
