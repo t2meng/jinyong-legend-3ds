@@ -441,7 +441,7 @@ int JY_PlayMIDI(const char *filename)
 
 	Mix_VolumeMusic(g_MusicVolume);
 
-	Mix_PlayMusic(currentMusic, -1);
+	Mix_PlayMusic(currentMusic, 1);
 
     strcpy(currentfile,filename);
 
