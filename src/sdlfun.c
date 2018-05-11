@@ -121,6 +121,8 @@ int InitSDL(void)
  
     SDL_VideoDriverName(tmpstr, 255);
 	JY_Debug("Video Driver: %s\n",tmpstr);
+	
+	SDL_ShowCursor(SDL_DISABLE);
 
     InitFont();  //初始化
     
@@ -200,7 +202,7 @@ int InitGame(void)
 
 	*/
 	
-	g_Surface=SDL_SetVideoMode(w,h, g_ScreenBpp, SDL_SWSURFACE | SDL_TOPSCR | SDL_FULLSCREEN);
+	g_Surface=SDL_SetVideoMode(w,h, g_ScreenBpp, SDL_SWSURFACE | SDL_TOPSCR | SDL_CONSOLEBOTTOM | SDL_FULLSCREEN);
 	
 	if(g_Surface==NULL)
 		JY_Error("Cannot set video mode");
@@ -964,6 +966,7 @@ int JY_PlayMPEG(const char* filename,int esckey)
 // 全屏切换
 int JY_FullScreen()
 {    
+    #if 0
     SDL_Surface *tmpsurface;
 	const SDL_VideoInfo *info;
 
@@ -992,6 +995,7 @@ int JY_FullScreen()
     JY_Debug("blit_sw=%d,blit_sw_CC=%d,blit_sw_A=%d",info->blit_hw,info->blit_hw_CC ,info->blit_hw_A );
     JY_Debug("blit_fill=%d,videomem=%d",info->blit_fill,info->video_mem  );
 	JY_Debug("Color depth=%d",info->vfmt->BitsPerPixel);
+	#endif
 
 	return 0;
 }
